@@ -4,5 +4,6 @@ export class TreinosDto {
   diasemana: number;
 
   descricao: string;
-  
+
+  statustreino: number;
 }

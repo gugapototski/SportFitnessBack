@@ -10,7 +10,7 @@ export class TreinosService {
     const newTreino = await this.prisma.treinos.create({
       data: {
         ...treinosData
-      },
+      }
     });
 
     return newTreino;
