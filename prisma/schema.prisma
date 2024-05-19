@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  iduser             Int       @id @default(autoincrement())
+  nome           String
+  email          String    @unique
+  senha          String
+  codpersonal    String
+  flagpersonal   Boolean
+  treinos        treinos[]
+  treinodia      treinodia[]
+  dieta          dieta[]
+  dietadia       dietadia[]
+  @@map("users")
+}
+
+//diasemana
+// 1 - domingo
+// 2 - segunda
+// 3 - terca
+// 4 - quarta
+// 5 - quinta
+// 6 - sexta
+// 7 - sabado
+
+model treinos {
+  idtreinos            Int     @id @default(autoincrement())
+  iduser               Int
+  user                 user   @relation(fields: [iduser], references: [iduser])
+  diasemana            Int
+  descricao            String  
+  treinosdia           treinodia[]   
+  @@map("treinos")
+}
+
+model treinodia {
+  idtreinodia         Int @id @default(autoincrement())
+  iduser              Int
+  idtreinos           Int
+  user                user   @relation(fields: [iduser], references: [iduser])
+  treinos             treinos  @relation(fields: [idtreinos], references: [idtreinos])
+  titulo              String
+  descricao           String
+  @@map("treinodia")
+}
+
+model dieta {
+  iddieta            Int     @id @default(autoincrement())
+  iduser               Int
+  user                 user   @relation(fields: [iduser], references: [iduser])
+  diasemana            Int
+  descricao            String  
+  dietadia             dietadia[] 
+  @@map("dieta")
+}
+
+model dietadia {
+  iddietadia          Int @id @default(autoincrement())
+  iduser              Int
+  iddieta             Int
+  user                user   @relation(fields: [iduser], references: [iduser])
+  dieta               dieta  @relation(fields: [iddieta], references: [iddieta])
+  descricao           String
+  @@map("dietadia")
+}
+
+model dicas {
+  iddica             Int @id @default(autoincrement())
+  descricao          String
+  @@map("dicas")
+}
+
+
