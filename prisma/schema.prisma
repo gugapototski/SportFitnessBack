@@ -17,7 +17,6 @@ model user {
   treinos        treinos[]
   treinodia      treinodia[]
   dieta          dieta[]
-  dietadia       dietadia[]
   @@map("users")
 }
 
@@ -36,6 +35,7 @@ model treinos {
   user                 user   @relation(fields: [iduser], references: [iduser])
   diasemana            Int
   descricao            String  
+  statustreino         Int
   treinosdia           treinodia[]   
   @@map("treinos")
 }
@@ -52,23 +52,14 @@ model treinodia {
 }
 
 model dieta {
-  iddieta            Int     @id @default(autoincrement())
-  iduser               Int
-  user                 user   @relation(fields: [iduser], references: [iduser])
-  diasemana            Int
-  descricao            String  
-  dietadia             dietadia[] 
+  iddieta            	Int     @id @default(autoincrement())
+  iduser               	Int
+  user                 	user   @relation(fields: [iduser], references: [iduser])
+  nrrefeicao   		Int
+  descricao           	String
+  hrrefeicao              String
+  
   @@map("dieta")
-}
-
-model dietadia {
-  iddietadia          Int @id @default(autoincrement())
-  iduser              Int
-  iddieta             Int
-  user                user   @relation(fields: [iduser], references: [iduser])
-  dieta               dieta  @relation(fields: [iddieta], references: [iddieta])
-  descricao           String
-  @@map("dietadia")
 }
 
 model dicas {
@@ -76,5 +67,3 @@ model dicas {
   descricao          String
   @@map("dicas")
 }
-
-
