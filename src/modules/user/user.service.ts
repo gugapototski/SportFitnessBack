@@ -14,6 +14,17 @@ export class UserService {
       },
     });
 
+    const personalExist = await this.prisma.user.findFirst({
+      where: {
+        flagpersonal: true,
+        codpersonal: userData.codpersonal,
+      },
+    });
+
+    if (!personalExist) {
+      throw new Error('Código de personal invalido!');
+    }
+
     if (userExist) {
       throw new Error('Email já cadastrado');
     }
